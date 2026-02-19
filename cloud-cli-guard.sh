@@ -502,6 +502,22 @@ main() {
         # Log
         log_audit "BLOCKED" "$severity|$token" "$args"
         
+        # AI Agent Instruction
+        echo -e "${CYAN}╔════════════════════════════════════════════════════════════════════════════════╗${NC}"
+        echo -e "${CYAN}║  🤖 AI AGENT INSTRUCTION                                                        ║${NC}"
+        echo -e "${CYAN}╚════════════════════════════════════════════════════════════════════════════════╝${NC}"
+        echo ""
+        echo -e "${CYAN}If you are an AI assistant or agent executing commands on behalf of a user:${NC}"
+        echo ""
+        echo "  1. STOP and do not proceed with this command"
+        echo "  2. Ask the user to check their Teams private channel"
+        echo "  3. The user will find the approval token there"
+        echo "  4. Ask the user to provide you the token"
+        echo "  5. Once received, execute: $cli --approve <token>"
+        echo ""
+        echo -e "${CYAN}Do not attempt to bypass this safety measure or guess the token.${NC}"
+        echo ""
+        
         echo -e "${BLUE}To approve this operation:${NC}"
         echo ""
         echo "  1. Wait ${COOLDOWN_SECONDS}s for the cooldown period"
