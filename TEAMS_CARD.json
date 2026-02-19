@@ -1,0 +1,416 @@
+{
+  "type": "AdaptiveCard",
+  "version": "1.3",
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "🛡️ Cloud CLI Guard - Now Live for All Teams",
+      "weight": "Bolder",
+      "size": "Large",
+      "color": "Accent",
+      "separator": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Hey team! We've deployed a new safety system to protect against accidental deletions and production incidents when using Azure and GitHub CLI.",
+      "wrap": true
+    },
+    {
+      "type": "Container",
+      "style": "emphasis",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "What is it?",
+          "weight": "Bolder",
+          "size": "Medium"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Cloud CLI Guard adds a 60-second safety cooldown to destructive operations. Before any delete, purge, or dangerous command runs, it:",
+          "wrap": true
+        },
+        {
+          "type": "FactSet",
+          "facts": [
+            {
+              "title": "1.",
+              "value": "✅ Blocks the command"
+            },
+            {
+              "title": "2.",
+              "value": "✅ Sends approval token to this Teams channel"
+            },
+            {
+              "title": "3.",
+              "value": "✅ Waits 60 seconds for you to reconsider"
+            },
+            {
+              "title": "4.",
+              "value": "✅ Requires token from Teams to proceed (never shown in terminal)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Why?",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "• Prevent accidental resource deletions\n• Stop agents/LLMs from deleting things without approval\n• Protect against typos (e.g., deleting prod-rg instead of dev-rg)\n• Maintain audit trail of all dangerous operations",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "What gets blocked?",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "🔴 Azure CLI (CRITICAL):",
+      "weight": "Bolder",
+      "color": "Attention"
+    },
+    {
+      "type": "TextBlock",
+      "text": "• az group delete - Entire resource groups\n• az keyvault purge - Permanent key vault deletion\n• az vm stop/deallocate - Production downtime\n• az storage delete - Data loss\n• All purge operations",
+      "wrap": true,
+      "fontType": "Monospace"
+    },
+    {
+      "type": "TextBlock",
+      "text": "🔴 GitHub CLI (CRITICAL - No recovery!):",
+      "weight": "Bolder",
+      "color": "Attention",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "• gh repo delete - REPO GONE FOREVER\n• gh release delete - Release + assets deleted\n• gh secret delete - Credentials lost\n• gh pr merge --admin - Force merge",
+      "wrap": true,
+      "fontType": "Monospace"
+    },
+    {
+      "type": "Container",
+      "style": "good",
+      "spacing": "Large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "⚡ Quick Install",
+          "weight": "Bolder",
+          "size": "Medium",
+          "color": "Good"
+        },
+        {
+          "type": "TextBlock",
+          "text": "One command:",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "curl -fsSL https://raw.githubusercontent.com/pitcherco/cloud-cli-guard/main/install-cloud-guard.sh | bash",
+          "wrap": true,
+          "fontType": "Monospace",
+          "style": "code"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Then reload your shell:",
+          "wrap": true,
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "source ~/.bashrc  # or ~/.zshrc",
+          "wrap": true,
+          "fontType": "Monospace",
+          "style": "code"
+        },
+        {
+          "type": "TextBlock",
+          "text": "That's it! No manual config needed.",
+          "wrap": true,
+          "spacing": "Small",
+          "isSubtle": true
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "How to use",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "✅ Normal commands (instant):",
+      "weight": "Bolder",
+      "color": "Good"
+    },
+    {
+      "type": "TextBlock",
+      "text": "• az account list - Works immediately\n• az group list - Works immediately\n• gh repo list - Works immediately\n• gh pr view 123 - Works immediately",
+      "wrap": true,
+      "fontType": "Monospace"
+    },
+    {
+      "type": "TextBlock",
+      "text": "🛑 Dangerous commands (blocked):",
+      "weight": "Bolder",
+      "color": "Attention",
+      "spacing": "Medium"
+    },
+    {
+      "type": "Container",
+      "style": "attention",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "$ az group delete -n my-rg",
+          "fontType": "Monospace"
+        },
+        {
+          "type": "TextBlock",
+          "text": "╔════════════════════════════════╗\n║  💀 CRITICAL: Blocked          ║\n╚════════════════════════════════╝",
+          "fontType": "Monospace"
+        },
+        {
+          "type": "TextBlock",
+          "text": "To approve:\n1. Wait 60s\n2. Check this Teams channel for token\n3. Run: az --approve <token>",
+          "wrap": true
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Check this channel - you'll see a message with the approval token!",
+      "wrap": true,
+      "weight": "Bolder",
+      "color": "Accent",
+      "spacing": "Medium"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Approving commands:",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "1. Try your command (it gets blocked)\n2. Wait 60 seconds\n3. Look in this Teams channel for the token\n4. Run: az --approve <token> or gh --approve <token>",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "🤖 For AI/Agents",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "If an AI assistant hits a safety gate, it will see instructions to ask you for the token. Just check this channel, give them the token, they'll execute: az --approve <token>",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "🚨 Emergency Break Glass",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "If you need to run multiple dangerous commands (e.g., cleanup, incident response):",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "az --break-glass --enable       # Request (blocked, sends token)\naz --approve <token>            # Approve via Teams\naz --break-glass --enable       # Now enabled for 1 hour\n\n# Run your emergency commands...\n\naz --break-glass --disable      # Disable when done",
+      "wrap": true,
+      "fontType": "Monospace",
+      "style": "code"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Break glass also requires Teams approval and auto-expires after 1 hour.",
+      "wrap": true,
+      "isSubtle": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "Quick Reference",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Large"
+    },
+    {
+      "type": "FactSet",
+      "facts": [
+        {
+          "title": "Command:",
+          "value": "Purpose:"
+        },
+        {
+          "title": "az --guard-matrix",
+          "value": "Show all protected operations"
+        },
+        {
+          "title": "az --guard-status",
+          "value": "Check status and recent blocks"
+        },
+        {
+          "title": "az --approve <token>",
+          "value": "Approve blocked Azure command"
+        },
+        {
+          "title": "gh --approve <token>",
+          "value": "Approve blocked GitHub command"
+        },
+        {
+          "title": "az --break-glass --enable",
+          "value": "Request emergency bypass"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "📚 Repo & Docs",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "• Repository: https://github.com/pitcherco/cloud-cli-guard\n• Full docs: See CLOUD_CLI_GUARD_SETUP.md in the repo\n• Install script: install-cloud-guard.sh",
+      "wrap": true
+    },
+    {
+      "type": "TextBlock",
+      "text": "❓ FAQ",
+      "weight": "Bolder",
+      "size": "Medium",
+      "spacing": "Large"
+    },
+    {
+      "type": "Container",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "Q: Does this slow down my normal workflow?",
+          "weight": "Bolder"
+        },
+        {
+          "type": "TextBlock",
+          "text": "A: No! Only dangerous commands (delete, purge, etc.) are blocked. All read operations work instantly.",
+          "wrap": true,
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Q: What if I need to delete something quickly?",
+          "weight": "Bolder",
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "A: Break glass mode allows bypassing after Teams approval, or just wait 60s + grab the token from this channel.",
+          "wrap": true,
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Q: Will this break my existing scripts?",
+          "weight": "Bolder",
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "A: Only scripts that delete resources will be blocked. Non-destructive scripts work normally.",
+          "wrap": true,
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Q: Can I see what's been blocked?",
+          "weight": "Bolder",
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "A: Yes! Check the audit: cat ~/.azure/az-guard-audit.log or ask in this channel.",
+          "wrap": true,
+          "isSubtle": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "Q: What about GitHub CLI updates?",
+          "weight": "Bolder",
+          "spacing": "Small"
+        },
+        {
+          "type": "TextBlock",
+          "text": "A: The guard survives brew upgrade gh - no reinstallation needed!",
+          "wrap": true,
+          "isSubtle": true
+        }
+      ]
+    },
+    {
+      "type": "Container",
+      "style": "warning",
+      "spacing": "Large",
+      "items": [
+        {
+          "type": "TextBlock",
+          "text": "⚠️ Action Required",
+          "weight": "Bolder",
+          "size": "Medium",
+          "color": "Warning"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Please install this week:",
+          "wrap": true
+        },
+        {
+          "type": "TextBlock",
+          "text": "curl -fsSL https://raw.githubusercontent.com/pitcherco/cloud-cli-guard/main/install-cloud-guard.sh | bash && source ~/.bashrc",
+          "wrap": true,
+          "fontType": "Monospace",
+          "style": "code"
+        },
+        {
+          "type": "TextBlock",
+          "text": "Questions? Check the repo or ask in this channel!",
+          "wrap": true,
+          "spacing": "Small"
+        }
+      ]
+    },
+    {
+      "type": "TextBlock",
+      "text": "Thanks,\nDustin",
+      "wrap": true,
+      "spacing": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Cloud CLI Guard - Protecting production, one 60-second cooldown at a time ⏱️🛡️",
+      "wrap": true,
+      "size": "Small",
+      "isSubtle": true,
+      "horizontalAlignment": "Center"
+    }
+  ]
+}
