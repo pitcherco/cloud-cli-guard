@@ -3,6 +3,12 @@
 .claude/
 .vscode/
 .windsurfrules
+
+# Git hooks / CI config / AI agent instructions (local-only)
+.githooks/
+.github/
+AGENTS.md
+CLAUDE.md
 *.swp
 *.swo
 *~
