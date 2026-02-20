@@ -1,0 +1,12 @@
+#!/bin/sh
+EMAIL=$(git config user.email)
+EXPECTED="rdomingues@pitcherco.com"
+if [ "$EMAIL" != "$EXPECTED" ]; then
+  echo ""
+  echo "ERROR: Git email is '$EMAIL'"
+  echo "Expected: '$EXPECTED'"
+  echo "You may be using the wrong Git identity for Dirtybird."
+  echo "Check your .gitconfig conditional includes."
+  echo ""
+  exit 1
+fi
