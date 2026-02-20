@@ -53,6 +53,17 @@ end
 
 Then reload: `source ~/.bashrc` (or `~/.zshrc`)
 
+**PowerShell** (Windows):
+```powershell
+# Run the installer from the repo directory
+.\Install-CloudGuard.ps1
+
+# Reload profile
+. $PROFILE
+```
+
+This installs a native PowerShell module that shadows `az` and `gh` commands. It shares the same config, audit log, and approval tokens with the bash version, so both shells see the same state.
+
 ## Protected Operations
 
 ### Azure CLI (🔴 Critical, 🟠 High, 🟡 Medium Risk)
@@ -175,10 +186,17 @@ The wrapper continues to work automatically.
 
 ## Uninstall
 
+**Bash/Zsh/Fish:**
 ```bash
 # Remove shell functions from ~/.bashrc or ~/.zshrc
 rm ~/.local/bin/cloud-cli-guard
 rm -rf ~/.azure/az-guard-*
+```
+
+**PowerShell:**
+```powershell
+# Remove Import-Module line from $PROFILE, then:
+Remove-Item -Recurse "$HOME\Documents\PowerShell\Modules\CloudCliGuard"
 ```
 
 ## Security Notes
