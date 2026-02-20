@@ -1,0 +1,40 @@
+# Editor / IDE
+.cursor/
+.claude/
+.vscode/
+.windsurfrules
+
+# Git hooks / CI config / AI agent instructions (local-only)
+.githooks/
+.github/
+AGENTS.md
+CLAUDE.md
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Installer backup artifacts
+*.bak
+
+# --- Credentials and secrets (do not commit) - added by propagate-ai-config ---
+.env
+.env.*
+!.env.example
+.cursor/mcp.json
+*.pem
+*.key
+*.pfx
+credentials*.json
+client_secret*.json
+*credentials*.json
+**/secrets*
+**/secrets/
+*.token
+*.token.json
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+# --- end credentials block ---

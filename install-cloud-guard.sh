@@ -184,6 +184,37 @@ echo "Documentation:"
 echo "  README.md - Quick start guide"
 echo "  CLOUD_CLI_GUARD_SETUP.md - Complete documentation"
 echo ""
+# Auto-install PowerShell module if powershell is available
+PS_INSTALLER="$SCRIPT_DIR/Install-CloudGuard.ps1"
+if [[ -n "$CLOUD_GUARD_CROSS_INSTALL" ]]; then
+    : # Called from PS installer -- skip to avoid recursion
+elif [[ -f "$PS_INSTALLER" ]]; then
+    PS_EXE=""
+    if command -v pwsh &>/dev/null; then
+        PS_EXE="pwsh"
+    elif command -v powershell.exe &>/dev/null; then
+        PS_EXE="powershell.exe"
+    elif command -v powershell &>/dev/null; then
+        PS_EXE="powershell"
+    fi
+
+    if [[ -n "$PS_EXE" ]]; then
+        echo "Detected PowerShell ($PS_EXE). Installing PowerShell guard..."
+        # Convert Git Bash path to Windows path if needed
+        WIN_INSTALLER="$PS_INSTALLER"
+        if [[ "$PS_INSTALLER" == /c/* || "$PS_INSTALLER" == /d/* ]]; then
+            WIN_INSTALLER=$(echo "$PS_INSTALLER" | sed 's|^/\([a-zA-Z]\)/|\1:/|' | sed 's|/|\\|g')
+        fi
+        CLOUD_GUARD_CROSS_INSTALL=1 "$PS_EXE" -NoProfile -ExecutionPolicy Bypass -File "$WIN_INSTALLER" 2>&1 | sed 's/^/  [PS] /' || \
+            echo "  PowerShell install had issues (non-fatal). You can retry: $PS_EXE -File Install-CloudGuard.ps1"
+        echo ""
+    else
+        echo "PowerShell not detected. To also protect PowerShell, run:"
+        echo "  powershell -ExecutionPolicy Bypass -File Install-CloudGuard.ps1"
+        echo ""
+    fi
+fi
+
 echo "To uninstall:"
 echo "  1. Remove the az() and gh() functions from $SHELL_CONFIG"
 echo "  2. rm ~/.local/bin/cloud-cli-guard"
